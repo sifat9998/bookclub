@@ -4,3 +4,10 @@
 
 <div th:insert="~{fragments/footer :: footer}"></div>
 <div th:insert="~{fragments/scriptFooter :: scriptFooter}"></div>
+
+<div th:each="book : ${books}">
+    <h3 th:text="${book.title}"></h3>
+    <p th:text="${book.description}"></p>
+
+    <a th:href="@{/{id}(id=${book.isbn})}">View</a>
+</div>
