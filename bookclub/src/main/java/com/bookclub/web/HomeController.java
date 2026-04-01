@@ -47,5 +47,16 @@ public class HomeController {
         return "monthly-books/view";
     }
 
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    public String showBook(@PathVariable String id, Model model) {
+
+        MemBookDao dao = new MemBookDao();
+        Book book = dao.find(id);
+
+        model.addAttribute("book", book);
+
+        return "monthly-books/view";
+    }
+
 }
 
