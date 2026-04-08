@@ -2,11 +2,13 @@ package com.bookclub.service.impl;
 
 import com.bookclub.model.Book;
 import com.bookclub.service.dao.BookDao;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Repository
 public class MemBookDao implements BookDao {
 
     private List<Book> books = new ArrayList<>();
@@ -20,17 +22,34 @@ public class MemBookDao implements BookDao {
     }
 
     @Override
+    public void add(Book entity) {
+        books.add(entity);
+    }
+
+    @Override
+    public void update(Book entity) {
+        Book existing = find(entity.getIsbn());
+        if (existing != null) {
+            existing.setTitle(entity.getTitle());
+            existing.setDescription(entity.getDescription());
+        }
+    }
+
+    @Override
+    public boolean remove(Book entity) {
+        return books.remove(entity);
+    }
+
+    @Override
     public List<Book> list() {
         return books;
     }
 
     @Override
     public Book find(String key) {
-        for (Book book : books) {
-            if (book.getIsbn().equals(key)) {
-                return book;
-            }
-        }
-        return new Book();
+        return books.stream()
+                .filter(book -> book.getIsbn().equals(key))
+                .findFirst()
+                .orElse(null);
     }
 }

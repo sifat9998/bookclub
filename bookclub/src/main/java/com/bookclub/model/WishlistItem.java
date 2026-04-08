@@ -1,16 +1,15 @@
 package com.bookclub.model;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "wishlist")
 public class WishlistItem {
 
-    @NotNull(message = "ISBN is a required field.")
-    @NotEmpty(message = "ISBN is a required field.")
-    private String isbn;
+    @Id
+    private String id;
 
-    @NotNull(message = "Title is a required field.")
-    @NotEmpty(message = "Title is a required field.")
+    private String isbn;
     private String title;
 
     public WishlistItem() {}
@@ -20,14 +19,27 @@ public class WishlistItem {
         this.title = title;
     }
 
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public String getId() {
+        return id;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    @Override
-    public String toString() {
-        return "WishlistItem{isbn=" + isbn + ", title=" + title + "}";
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
