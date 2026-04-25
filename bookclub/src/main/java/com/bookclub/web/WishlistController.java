@@ -13,25 +13,37 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/wishlist")
+
+
 public class WishlistController {
 
     @Autowired
     private WishlistDao wishlistDao;
 
     // ✅ Show all wishlist items
+//    @GetMapping
+//    public String showWishlist(Model model) {
+//        List<WishlistItem> items = wishlistDao.list();
+//        model.addAttribute("wishlist", items);
+//        return "wishlist/list";
+//    }
+
     @GetMapping
     public String showWishlist(Model model) {
-        List<WishlistItem> items = wishlistDao.list();
-        model.addAttribute("wishlist", items);
-        return "wishlist/list";
+        return "wishlist/list";   // ✅ MUST BE THIS
     }
 
     // ✅ Show form to add new item
     @GetMapping("/new")
     public String showForm(Model model) {
-        model.addAttribute("wishlistItem", new WishlistItem());
+        model.addAttribute("wishlistItem", new WishlistItem()); // ✅ REQUIRED
         return "wishlist/new";
     }
+
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String showWishlist() {
+//        return "wishlist/list";
+//    }
 
     // ✅ Handle form submission
     @PostMapping
