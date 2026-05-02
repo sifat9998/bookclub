@@ -1,23 +1,21 @@
 package com.bookclub.model;
 
-import java.util.List;
-
 public class Book {
 
     private String isbn;
     private String title;
     private String description;
+    private String infoUrl;
     private int numOfPages;
-    private List<String> authors;
 
     public Book() {}
 
-    public Book(String isbn, String title, String description, int numOfPages, List<String> authors) {
+    public Book(String isbn, String title, String description, String infoUrl, int numOfPages) {
         this.isbn = isbn;
         this.title = title;
         this.description = description;
+        this.infoUrl = infoUrl;
         this.numOfPages = numOfPages;
-        this.authors = authors;
     }
 
     public String getIsbn() { return isbn; }
@@ -29,17 +27,17 @@ public class Book {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    public String getInfoUrl() { return infoUrl; }
+    public void setInfoUrl(String infoUrl) { this.infoUrl = infoUrl; }
+
     public int getNumOfPages() { return numOfPages; }
     public void setNumOfPages(int numOfPages) { this.numOfPages = numOfPages; }
 
-    public List<String> getAuthors() { return authors; }
-    public void setAuthors(List<String> authors) { this.authors = authors; }
-
     @Override
     public String toString() {
-        return "Book{isbn=" + isbn + ", title=" + title +
-                ", description=" + description +
-                ", numOfPages=" + numOfPages +
-                ", authors=" + authors + "}";
+        return "Book{isbn='" + isbn + "', title='" + title +
+                "', description='" + description +
+                "', infoUrl='" + infoUrl +
+                "', numOfPages=" + numOfPages + "}";
     }
 }

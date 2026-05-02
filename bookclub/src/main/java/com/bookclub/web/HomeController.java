@@ -1,62 +1,46 @@
 package com.bookclub.web;
 
 import com.bookclub.model.Book;
-import com.bookclub.service.impl.MemBookDao;
+import com.bookclub.service.impl.RestBookDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
-
 public class HomeController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @Autowired
+    private RestBookDao bookDao;
+
+    // ✅ HOME PAGE
+    @GetMapping
     public String showHome(Model model) {
-
-        MemBookDao bookDao = new MemBookDao();
         List<Book> books = bookDao.list();
-
         model.addAttribute("books", books);
-
         return "index";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/about")
-    public String showAboutUs(Model model) {
+    // ✅ ABOUT PAGE
+    @GetMapping("/about")
+    public String showAboutUs() {
         return "about";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/contact")
-    public String showContactUs(Model model) {
+    // ✅ CONTACT PAGE
+    @GetMapping("/contact")
+    public String showContactUs() {
         return "contact";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getMonthlyBook(@PathVariable String id, Model model) {
-
-        MemBookDao bookDao = new MemBookDao();
+    // ✅ VIEW BOOK DETAILS (IMPORTANT FOR ASSIGNMENT)
+    @GetMapping("/monthly-books/view")
+    public String viewBook(@RequestParam String id, Model model) {
         Book book = bookDao.find(id);
-
         model.addAttribute("book", book);
-
         return "monthly-books/view";
     }
-
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
-    public String showBook(@PathVariable String id, Model model) {
-
-        MemBookDao dao = new MemBookDao();
-        Book book = dao.find(id);
-
-        model.addAttribute("book", book);
-
-        return "monthly-books/view";
-    }
-
 }
-
