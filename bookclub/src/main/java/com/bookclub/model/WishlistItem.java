@@ -8,7 +8,7 @@ public class WishlistItem {
 
     @Id
     private String id;
-
+    private String username;
     private String isbn;
     private String title;
 
@@ -42,4 +42,14 @@ public class WishlistItem {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }
+

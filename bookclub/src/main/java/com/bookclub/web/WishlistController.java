@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
 import java.util.List;
 
 @Controller
@@ -29,7 +29,9 @@ public class WishlistController {
 //    }
 
     @GetMapping
-    public String showWishlist(Model model) {
+    public String showWishlist(Model model,Authentication authentication) {
+
+        System.out.println("Logged in user: " + authentication.getName());
         return "wishlist/list";   // ✅ MUST BE THIS
     }
 
@@ -40,6 +42,25 @@ public class WishlistController {
         return "wishlist/new";
     }
 
+    @GetMapping("/{id}")
+    public String showWishlistItem(@PathVariable String id, Model model) {
+
+        WishlistItem item = wishlistDao.find(id);
+        model.addAttribute("wishlistItem", item);
+
+        return "wishlist/view";
+    }
+
+
+    @GetMapping("/remove/{id}")
+    public String removeWishlistItem(@PathVariable String id) {
+
+        wishlistDao.remove(id);
+
+        return "redirect:/wishlist";
+    }
+
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    public String showWishlist() {
 //        return "wishlist/list";
@@ -48,13 +69,38 @@ public class WishlistController {
     // ✅ Handle form submission
     @PostMapping
     public String addWishlistItem(@Valid WishlistItem wishlistItem,
-                                  BindingResult bindingResult) {
+                                  BindingResult bindingResult,
+                                  Authentication authentication) {
 
         if (bindingResult.hasErrors()) {
             return "wishlist/new";
         }
 
+
+        wishlistItem.setUsername(authentication.getName());
+
         wishlistDao.add(wishlistItem);
+
         return "redirect:/wishlist";
     }
+
+
+    @PostMapping("/update")
+    public String updateWishlistItem(
+            @Valid WishlistItem wishlistItem,
+            BindingResult bindingResult,
+            Authentication authentication) {
+
+        // 🔥 set username
+        wishlistItem.setUsername(authentication.getName());
+
+        if (bindingResult.hasErrors()) {
+            return "wishlist/view";
+        }
+
+        wishlistDao.update(wishlistItem);
+
+        return "redirect:/wishlist";
+    }
+
 }

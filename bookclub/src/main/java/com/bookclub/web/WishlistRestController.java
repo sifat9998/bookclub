@@ -2,33 +2,66 @@ package com.bookclub.web;
 
 import com.bookclub.model.WishlistItem;
 import com.bookclub.service.dao.WishlistDao;
-import com.bookclub.service.impl.MongoWishlistDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/wishlist", produces = "application/json")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/wishlist")
 public class WishlistRestController {
 
-    private WishlistDao wishlistDao = new MongoWishlistDao();
-
     @Autowired
-    public void setWishlistDao(WishlistDao wishlistDao) {
-        this.wishlistDao = wishlistDao;
+    private WishlistDao wishlistDao;
+
+    // ✅ GET ALL ITEMS (USER-SPECIFIC)
+    @GetMapping
+    public List<WishlistItem> list(Authentication authentication) {
+
+        String username = authentication.getName();
+
+        return wishlistDao.list(username);
     }
 
-    // GET all items
-    @RequestMapping(method = RequestMethod.GET)
-    public List<WishlistItem> showWishlist() {
-        return wishlistDao.list();
-    }
+    // ✅ GET SINGLE ITEM
+    @GetMapping("/{id}")
+    public WishlistItem find(@PathVariable String id) {
 
-    // GET by ID
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public WishlistItem findById(@PathVariable String id) {
         return wishlistDao.find(id);
+    }
+
+    // ✅ CREATE NEW ITEM
+    @PostMapping
+    public WishlistItem add(@RequestBody WishlistItem wishlistItem,
+                            Authentication authentication) {
+
+        wishlistItem.setUsername(authentication.getName());
+
+        wishlistDao.add(wishlistItem);
+
+        return wishlistItem;
+    }
+
+    // ✅ UPDATE ITEM
+    @PutMapping("/{id}")
+    public WishlistItem update(@PathVariable String id,
+                               @RequestBody WishlistItem wishlistItem,
+                               Authentication authentication) {
+
+        wishlistItem.setId(id);
+        wishlistItem.setUsername(authentication.getName());
+
+        wishlistDao.update(wishlistItem);
+
+        return wishlistItem;
+    }
+
+    // ✅ DELETE ITEM
+    @DeleteMapping("/{id}")
+    public boolean remove(@PathVariable String id) {
+
+        return wishlistDao.remove(id);
     }
 }

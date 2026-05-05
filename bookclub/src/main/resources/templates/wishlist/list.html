@@ -79,10 +79,10 @@
             <tr>
                 <td>${book.isbn}</td>
                 <td>${book.title}</td>
-                <td>
-                    <a href="/wishlist/edit/${book.id}">Edit</a> |
-                    <a href="/wishlist/delete/${book.id}">Delete</a>
-                </td>
+               <td>
+    <a href="/wishlist/${book.id}" class="text-primary">Edit</a> |
+    <a href="/wishlist/remove/${book.id}" class="text-danger">Delete</a>
+</td>
             </tr>
             `;
             }

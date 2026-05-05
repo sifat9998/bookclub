@@ -19,6 +19,11 @@
 
             <!-- Navbar Links -->
             <div class="collapse navbar-collapse">
+
+                <div sec:authorize="isAuthenticated()">
+                    Logged in as <strong sec:authentication="name"></strong>
+                </div>
+
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
