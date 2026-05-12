@@ -23,6 +23,11 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/wishlist/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
+                        .requestMatchers(
+                                "/monthly-books",
+                                "/monthly-books/new",
+                                "/monthly-books/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -59,4 +64,9 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(user, admin);
     }
+
+
+
+
 }
+

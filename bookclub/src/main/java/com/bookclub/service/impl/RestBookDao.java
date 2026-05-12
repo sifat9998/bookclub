@@ -50,12 +50,12 @@ public class RestBookDao implements BookDao {
 
     // ✅ LIST ALL BOOKS (HARDCODED ISBNs AS PER ASSIGNMENT)
     @Override
-    public List<Book> list() {
+    public List<Book> list(String key) {
 
         try {
-            String isbnString = "ISBN:9780590353427,9780261103573,9780261102361,9780261102378";
+//            String isbnString = "ISBN:9780590353427,9780261103573,9780261102361,9780261102378";
 
-            Object doc = getBooksDoc(isbnString);
+            Object doc = getBooksDoc(key);
 
             List<Book> books = new ArrayList<>();
 
@@ -115,7 +115,9 @@ public class RestBookDao implements BookDao {
     }
 
     @Override
-    public boolean remove(Book entity) {
-        throw new UnsupportedOperationException("Not supported");
+    public boolean remove(String key) {
+        return false;
     }
+
+
 }

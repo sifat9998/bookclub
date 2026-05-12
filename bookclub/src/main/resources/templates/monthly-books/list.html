@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Monthly Books</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Monthly Books</h1>
+
+    <div class="text-center mb-3">
+        <a href="/monthly-books/new" class="btn btn-outline-secondary">
+            New Monthly Book
+        </a>
+    </div>
+
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>ISBN</th>
+            <th>Functions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="book : ${books}">
+
+            <td th:text="${book.month}"></td>
+
+            <td th:text="${book.isbn}"></td>
+
+            <td>
+                <a th:href="@{'/monthly-books/remove/' + ${book.id}}">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
