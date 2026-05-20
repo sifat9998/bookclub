@@ -77,18 +77,12 @@ public class HomeController {
         return "contact";
     }
 
-    // ✅ VIEW BOOK DETAILS (IMPORTANT FOR ASSIGNMENT)
+    // ✅ VIEW BOOK DETAILS
     @GetMapping("/monthly-books/view")
     public String viewBook(@RequestParam String id, Model model) {
         Book book = bookDao.find(id);
         model.addAttribute("book", book);
         return "monthly-books/view";
     }
-
-
-
-
-
-
 
 }
