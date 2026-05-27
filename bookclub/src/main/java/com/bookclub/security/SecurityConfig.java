@@ -57,12 +57,12 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
 
-        UserDetails admin = User.withUsername("admin")
-                .password(encoder.encode("admin123"))
+        UserDetails testuser01 = User.withUsername("testuser01")
+                .password(encoder.encode("password01"))
                 .roles("USER", "ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(user, testuser01);
     }
 
 
